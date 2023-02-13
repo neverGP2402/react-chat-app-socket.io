@@ -1,72 +1,131 @@
 import React, {useEffect, useState} from 'react';
 import {UsergroupAddOutlined} from '@ant-design/icons'
 import {useNavigate} from 'react-router-dom'
-import avataDefault from '../../assets/image/userDefaut.png'
-import {  ChatItem  } from "react-chat-elements"
 import {toast} from 'react-toastify'
-import {getAllUsersService, getMessageService} from '../../service/axiosService'
+import {getUsersChatService, getFollowersService, getAllFriendService} from '../../service/axiosService'
+import AddFriendModal from '../modal/friend'
 import './home.scss'
+import ListChat from './chatList/listChat';
+import ListFriend from './chatList/listFriend';
 
-function ChatListHome ({handleChatChange,setIsStarted,setMessages}) {
-    const [users, setUsers] = useState([])
-    const [currentUser, setCurrentUser] = useState(undefined)
+function ChatListHome ({handleChatChange,setIsStarted, userOnline,socket, menu}) {
+    const [request, setRequest] = useState([])
+    const [isAddFriend, setIsAddFriend] = useState(false)
+    const [users, setUsers] = useState(undefined)
+    const [currentUser, setCurrentUser] = useState([])
+    const [listFriends, setListFriends] = useState([])
     const [selectedUsers, setSelectedUsers] = useState(undefined)
+    const [modalAddUser, setModalAddUser] = useState(false)
+
     const navigate = useNavigate()
-    
+    const local = JSON.parse(localStorage.getItem('chat-application-user'))
+
+
+    const isOnline = (id) => {
+        const user = userOnline.find(user => user.userId === id)
+        return user ? true : false
+    }
+
+    // console.log('render')
     useEffect(() => {
-        const local = JSON.parse(localStorage.getItem('chat-application-user'))
+        console.log('is add friends')
+        if(isAddFriend){
+            setIsAddFriend(false)
+          socket.current.on("recieve-send-request-add-friend", (data)=>{
+            console.log('socket is online')
+              setIsAddFriend(false)
+          }) 
+        }
+      
+    },[isAddFriend])
+
+    useEffect(() => {
         const checkUser = async () => {
-            if(!local.email || !local.name){
+            if(!local?.email || !local?.name){
                 return navigate('/login')
             }
-            await setCurrentUser(local)
+            await setUsers(local)
         }
         checkUser();
     },[])
-
+    
     useEffect(() => {
         const getUsers = async () => {
             // check users login?
-            if(currentUser){
+            if(users){
                 // check if user is not avatar
-                if(currentUser.email || currentUser.name){
+                if(users.email || users.name){
                     try {
-                        const data = await getAllUsersService('all')
+                        const data = await getUsersChatService(local._id)
+                        console.log(data)
                         if(data.success){
-                            setUsers(data.user)
+                            setCurrentUser(data.user)
                             return
                         }else{
                             toast.error(data.message)
                         }
                         return
                     } catch (error) {
-                        toast.error('Get list Friends failed')
+                        console.log(error)
                     }
                 }
             }
         }
         getUsers();
-    },[currentUser])
+    },[users])
+
+    useEffect(() => {
+        const getListFriends =async () =>{
+            try{
+                const friends =  await getAllFriendService(local._id)
+                if(friends.success){
+                    setListFriends(friends.user)
+                }
+            }catch (err){
+                console.log(err)
+            }
+        }
+        getListFriends();
+    },[request])
+
+    useEffect(() => {
+        const getFollowers = async () => {
+            try{
+                const followers = await getFollowersService(local._id)
+                if(followers.success){
+                    setRequest(followers.user)
+                }
+            }catch(error){
+                console.log(error)
+                toast.error('Get followers failed')
+            }
+        }
+        getFollowers()
+    },[])
 
     const handleOnClickChatItem = async(index,userChat) => {
         setSelectedUsers(index)
         handleChatChange(userChat)
         setIsStarted(false)
-
-        const result = await getMessageService(currentUser.id,userChat._id)
-        
-        if(result.success){
-            setMessages(result.data)
-        }
     }
+
 
     return (
         <>
-            <div className='chatlist'>
+        <div className='chatlist'>
         <div className="header">
             <div className="header_left mt-2" style={{color: '#419af9'}}><i className="far fa-comment-dots"></i></div>
             <div className="header_right">
-                <div className='add'><UsergroupAddOutlined /></div> 
+                <div className='add' onClick={()=>setModalAddUser(!modalAddUser)}>
+                    <UsergroupAddOutlined />
+                    {request.length > 0 ? <span className='new'>N</span> : ''}
+                </div> 
+                {modalAddUser ? <AddFriendModal request={request} 
+                        setModalAddUser={setModalAddUser}
+                        isAddFriend={isAddFriend}
+                        setIsAddFriend={setIsAddFriend}
+                        socket={socket}
+                    /> : ''}
             </div>
         </div>
         <div className="search">
@@ -77,28 +136,21 @@ function ChatListHome ({handleChatChange,setIsStarted,setMessages}) {
             </div>
         </div>
         <div className="list-chat">
-            <div className="container_list-chat">
-            {users.map((item,index)=>{
-            return(
-                <div key={index}  onClick={() => {handleOnClickChatItem(index,item)}} className={`avatar_item ${selectedUsers === index ? 'selected' : ''}`}>
-               
-                    <ChatItem
-                        avatar={item.avatar ? `data:image/svg+xml;base64,${item.avatar}`: avataDefault }
-                        avatarFlexible={true}
-                        alt="kursat_avatar"
-                        title={item.name}
-                        subtitle="What are you doing ?"
-                        date={new Date()}
-                        muted={true}
-                        showMute={true}
-                        showVideoCall={true}
-                        unread={2}
-                    />
-                </div>
-            )
-        })}
-            </div>
-        
+            {menu === 'home' && <ListChat
+                currentUser={currentUser}
+                selectedUsers={selectedUsers}
+                handleOnClickChatItem={handleOnClickChatItem}
+                isOnline={isOnline}
+            />}
+            {
+                menu === 'friends' && 
+                <ListFriend
+                currentUser={listFriends}
+                selectedUsers={selectedUsers}
+                handleOnClickChatItem={handleOnClickChatItem}
+                isOnline={isOnline}
+            />
+            }
         </div>        
     </div>
         </>

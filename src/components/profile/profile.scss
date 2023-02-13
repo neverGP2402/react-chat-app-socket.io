@@ -1,0 +1,212 @@
+.profile {
+    .container-profile {
+        .btn {
+            display: flex;
+            button {
+                width: 120px;
+                height: 35px;
+                border-top: none;
+                border-left: none;
+                font-size: 17px;
+                border-right: none;
+                background-color: #fff;
+                border: none;
+                outline: none;
+            }
+            .active {
+                border-bottom: 3px solid #419af9;
+            }
+        }
+    }
+    .content {
+        .fa-user-edit {
+            cursor: pointer;
+        }
+        input {
+            outline: none;
+            width: 100%;
+            padding-right: 0 8px;
+        }
+        .group {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            .avatar {
+                margin-right: 16px;
+                &:hover .upload-avt {
+                    display: block;
+                }
+                .edit-avt {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    label {
+                        margin: 12px;
+                        padding: 6px 13px;
+                        border-radius: 5px;
+                        display: none;
+                        // border: #419af9 1px solid;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: #ece8e8;
+                            color: #419af9;
+                        }
+                    }
+                }
+            }
+            .info {
+                // border-left: 1px solid #9b0d31;
+                border-radius: 10px;
+                padding: 12px;
+                width: 100%;
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                .friend-follow {
+                    margin: 0 auto;
+                    width: 96%;
+                    padding: 0 12px;
+                    border-radius: 10px;
+                    display: flex;
+                    background-color: #ece8e8;
+                    justify-content: space-between;
+                    .group {
+                        display: flex;
+                        flex-direction: column;
+                        .title {
+                            font-weight: 500;
+                        }
+                    }
+                }
+                .name {
+                    width: 300px;
+                    display: flex;
+                    padding: 4px 0;
+                    width: 100%;
+                    position: relative;
+                    &:hover label {
+                        display: block;
+                    }
+                    .full-name {
+                        font-weight: bold;
+                        font-size: 18px;
+                    }
+                    label {
+                        position: absolute;
+                        height: 30px;
+                        text-align: center;
+                        display: none;
+                        width: 30px;
+                        right: 0;
+                        border-radius: 50%;
+                        // flex-direction: row;
+                        &:hover {
+                            background-color: #d8d4d4;
+                            color: #419af9;
+                        }
+                    }
+                    input {
+                        width: 90%;
+                        background-color: transparent;
+                        padding: 0 8px;
+                        border: none;
+                    }
+                    input:focus {
+                        border-bottom: 1px solid #419af9;
+                    }
+                }
+            }
+        }
+        .info-left {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .phone {
+                width: 48%;
+                .react-date-picker__wrapper {
+                    border: none;
+                    height: 30px;
+                    border-radius: 5px;
+                    background-color: #fff;
+                    &:hover {
+                        border: 1px solid #419af9;
+                    }
+                }
+                input {
+                    width: 100%;
+                    outline: none;
+                    height: 30px;
+                    // border: none;
+                }
+            }
+            .bottom {
+                display: flex;
+                flex-wrap: wrap;
+                width: 48%;
+                justify-content: space-between;
+                select {
+                    outline: none;
+                    width: 100%;
+                    height: 30px;
+                    // border: none;
+                }
+            }
+        }
+        .bottom {
+            .gender {
+                height: 30px;
+                text-align: center;
+                display: none;
+                border-radius: 50%;
+                width: 30px;
+                &:hover {
+                    background-color: #d8d4d4;
+                    color: #419af9;
+                }
+            }
+            &:hover .gender {
+                display: block;
+            }
+        }
+        .form-group {
+            padding: 8px 0;
+            width: 100%;
+            select {
+                border: none;
+            }
+            select:focus {
+                border-bottom: #419af9 1px solid;
+            }
+            .input {
+                display: flex;
+                justify-content: space-between;
+                position: relative;
+                &:hover label {
+                    display: block;
+                }
+                input {
+                    width: 90%;
+                    border: none;
+                    &:focus {
+                        border-bottom: #419af9 1px solid;
+                    }
+                }
+                label {
+                    position: absolute;
+                    height: 30px;
+                    text-align: center;
+                    display: none;
+                    width: 30px;
+                    right: 0;
+                    border-radius: 50%;
+                    &:hover {
+                        background-color: #d8d4d4;
+                        color: #419af9;
+                    }
+                }
+            }
+        }
+        .zalo {
+            display: flex;
+            align-items: center;
+        }
+    }
+}

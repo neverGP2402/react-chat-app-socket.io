@@ -20,7 +20,7 @@ function SetAvatar () {
         }
         try {
             const avatar = avatars[selectedAvatar]
-            const data = await setAvatarService(user.id, {avatar})
+            const data = await setAvatarService(user._id, {avatar})
             toast.info(data.message)
             if(!user.avatar) {
                 if(data){

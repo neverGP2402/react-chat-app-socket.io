@@ -1,0 +1,148 @@
+.container_center {
+    width: 30%;
+    max-width: 400px;
+    .chatlist {
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        // overflow: scroll;
+        .header {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px;
+            margin-bottom: 20px;
+            .header_left {
+                font-size: 50px;
+                font-weight: bold;
+            }
+            .header_right {
+                .add:hover {
+                    background-color: #e6e6e6;
+                    color: #419af9;
+                }
+                .add {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 24px;
+                    width: 40px;
+                    height: 40px;
+                    // border: #333 1px solid;
+                    border-radius: 50%;
+                }
+            }
+        }
+        .search {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            // background-color: #333;
+            margin-bottom: 20px;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+            .search-box {
+                font-size: 16px;
+                padding-left: 12px;
+                display: flex;
+                position: relative;
+                border-radius: 20px;
+                justify-items: center;
+                justify-content: flex-end;
+                align-items: center;
+                padding: 0 20px;
+                .btn-search {
+                    display: flex;
+                    justify-items: center;
+                    align-items: center;
+                    position: absolute;
+                    height: 35px;
+                    cursor: pointer;
+                    right: 29px;
+                    font-weight: bold;
+                    // border: #333 1px solid;
+                }
+                input[type="text"] {
+                    font-family: inherit;
+                    width: 35px;
+                    height: 35px;
+                    padding: 1px 21px 3px 12px;
+                    background-color: #fff;
+                    border: none;
+                    box-sizing: border-box;
+                    border-radius: 20px;
+                    transition: width .8 cubic-bezier(0.68, -0.55, 0.27, 1.55) .15;
+                    &:focus {
+                        outline: 1px solid #419af9;
+                    }
+                    &:focus,
+                    &:not(:placeholder-shown) {
+                        width: 100%;
+                        transition: width .8 cubic-bezier(0.68, -0.55, 0.27, 1.55);
+                        +button[type="reset"] {
+                            transform: rotate(-45deg) translateY(0);
+                            transition: transform .15 ease-out .8;
+                        }
+                        +button[type="reset"]:after {
+                            opacity: 1;
+                            transition: top 1.5 ease-out (0.8 + .15), right .15 ease-out (.8 + .15), opacity .15 ease (.8 + .15);
+                        }
+                    }
+                }
+                button[type="reset"] {
+                    background-color: transparent;
+                    width: 30px;
+                    height: 30px;
+                    border: 0;
+                    padding: 0;
+                    outline: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: absolute;
+                    top: (18px / 2) - (30px / 2);
+                    right: (18px / 2) - (30px / 2);
+                    transform: rotate(-45deg) translateY(18px - 3px);
+                    transition: transform .15 ease-out .15;
+                    &:before,
+                    &:after {
+                        content: "";
+                        background-color: #fff;
+                        width: 3px;
+                        height: 30px;
+                        position: absolute;
+                    }
+                    &:after {
+                        transform: rotate(90deg);
+                        opacity: 0;
+                        transition: transform .15 ease-out, opacity .15 ease-out;
+                    }
+                }
+            }
+        }
+        .list-chat {
+            overflow: scroll;
+            height: 85vh;
+            .avatar_item {
+                position: relative;
+                .online {
+                    position: absolute;
+                    width: 13px;
+                    height: 13px;
+                    border-radius: 50%;
+                    border: 2px solid #fff;
+                    left: 44px;
+                    top: 10px;
+                    background-color: #419af9;
+                    z-index: 4;
+                }
+            }
+        }
+        .selected {
+            .rce-citem {
+                background-color: #e6e6e6;
+            }
+        }
+    }
+}

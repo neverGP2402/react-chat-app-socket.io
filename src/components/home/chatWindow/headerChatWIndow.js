@@ -1,12 +1,15 @@
-import React, {useEffect,useState} from 'react';
+import React,{useState} from 'react';
 import { Avatar} from 'antd'
-import {useNavigate} from 'react-router-dom'
 import avataDefault from '../../../assets/image/userDefaut.png'
+import CallMicro from '../CallModal/callMicro';
+import ModalVideoCall from '../CallModal/callVideo';
 
-function HeaderChatWindow ({userChat}) {
-    const [user,setUser] = useState({
-        online: false,
-    })
+function HeaderChatWindow ({userChat,userOnline}) {
+    const [modalShow, setModalShow] = useState(false);
+    const isOnline = (id) => {
+        const user = userOnline.find(user => user.userId === id)
+        return user ? true : false
+    }
 
     return (
         <div className='header'>
@@ -16,12 +19,21 @@ function HeaderChatWindow ({userChat}) {
                 </div>
                 <div className="info m-lg-3">
                     <div className="name">{userChat.name}</div>
-                    <div className="status online">{user.online ? 'Online' : 'Offline'}</div>
+                    <div className={isOnline(userChat._id) ? "status online": 'status' }>{isOnline(userChat._id) ? 'Online' : 'Offline'}</div>
                 </div>
             </div>
             <div className="header-right">
                 <div className="button">
-                    <button style={{color:'#0abb87'}}><i className="fas fa-phone-volume"></i></button>
+                    <button style={{color:'#0abb87'}}   
+                        onClick={()=>setModalShow(!modalShow)}
+                    >
+                        <CallMicro
+                            modalShow={modalShow}
+                            setModalShow={setModalShow}
+                        />
+                        {/* <ModalVideoCall/> */}
+                        <i className="fas fa-phone-volume"></i>
+                    </button>
                 </div>
                 <div className="button">
                     <button style={{color:'#ffb822'}}><i className="fas fa-video"></i></button>

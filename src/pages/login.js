@@ -24,7 +24,7 @@ function Login () {
 
     const navigate = useNavigate()
     const {email, password} = values
-
+    console.log(values)
     // check user login?
     useEffect(() => {
         function login() {

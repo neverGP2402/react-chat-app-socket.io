@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import InputEmoji from "react-input-emoji";
-import {SendOutlined} from '@ant-design/icons'
 
 function FooterChatWindow ({handleSendMessage}) {
     const [values, setValues] = useState('')
@@ -10,9 +9,7 @@ function FooterChatWindow ({handleSendMessage}) {
         setValues('');
       }
     }
-    // const handleOnEnter = (msg) =>{
-    //     handleSendMessage(values)
-    // }
+    
     return (
     <div className='footer'>
         <div className="file"><button>+</button></div>

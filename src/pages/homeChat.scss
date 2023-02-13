@@ -22,9 +22,6 @@
             .footer_sidebar {
                 margin-bottom: 30px;
                 flex-direction: column;
-                li {
-                    margin-top: 12px;
-                }
             }
             li:hover {
                 background-color: #e6e6e6;
@@ -64,8 +61,60 @@
                     width: 70%;
                     margin-top: 4px;
                     // border: 1px solid #888;
-                    .footer {
-                        flex-direction: column-reverse;
+                }
+                .footer {
+                    position: relative;
+                    transition: 0.6s ease;
+                    &:hover {
+                        color: #000;
+                    }
+                    &:hover .setting {
+                        display: block;
+                        transition: 0.6s ease;
+                    }
+                    .setting {
+                        position: absolute;
+                        width: fit-content;
+                        min-width: 220px;
+                        transition: 0.6s ease;
+                        display: none;
+                        left: 55px;
+                        border-radius: 5px;
+                        z-index: 5;
+                        text-align: left;
+                        background-color: #fff;
+                        padding: 16px 0;
+                        line-height: 16px;
+                        top: -100px;
+                        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+                        ul {
+                            padding: 0;
+                            margin: 0;
+                            // border: 1px solid red;
+                            li {
+                                font-size: 16px;
+                                height: 30px;
+                                padding: 0 20px;
+                                border-radius: 0;
+                                width: 100%;
+                                text-align: left;
+                                justify-content: left;
+                                cursor: pointer;
+                                .icon {
+                                    padding-right: 5px;
+                                }
+                            }
+                            .logout {
+                                border-top: 1px solid #999;
+                                color: red;
+                                opacity: .7;
+                                cursor: pointer;
+                                &:hover {
+                                    background-color: transparent;
+                                    opacity: 1;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -102,8 +151,24 @@
                         font-size: 24px;
                         width: 40px;
                         height: 40px;
-                        // border: #333 1px solid;
                         border-radius: 50%;
+                        position: relative;
+                        .new {
+                            position: absolute;
+                            background-color: red;
+                            width: 18px;
+                            height: 18px;
+                            display: flex;
+                            align-items: center;
+                            text-align: center;
+                            justify-content: center;
+                            color: #fff;
+                            font-size: 13px;
+                            font-weight: bold;
+                            border-radius: 50%;
+                            top: -2px;
+                            right: -2px;
+                        }
                     }
                 }
             }
@@ -131,6 +196,7 @@
                         align-items: center;
                         position: absolute;
                         height: 35px;
+                        cursor: pointer;
                         right: 29px;
                         font-weight: bold;
                         // border: #333 1px solid;
@@ -196,6 +262,20 @@
             .list-chat {
                 overflow: scroll;
                 height: 85vh;
+                .avatar_item {
+                    position: relative;
+                    .online {
+                        position: absolute;
+                        width: 13px;
+                        height: 13px;
+                        border-radius: 50%;
+                        border: 2px solid #fff;
+                        left: 44px;
+                        top: 10px;
+                        background-color: #419af9;
+                        z-index: 4;
+                    }
+                }
             }
             .selected {
                 .rce-citem {
@@ -210,7 +290,6 @@
         width: 100%;
         border-right: 1px solid #999;
         .header,
-        .body,
         .footer,
         .wellcome {
             width: 100%;
@@ -261,6 +340,7 @@
                     .online {
                         color: #419af9;
                         font-weight: 600;
+                        font-style: italic;
                     }
                 }
             }
@@ -287,11 +367,17 @@
         .body {
             flex: 10;
             box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            overflow: scroll;
+            // overflow: hidden;
+            overflow-y: scroll;
+            // display: flex;
+            // justify-content: flex-end;
+            .body-message {
+                // height: 100%;
+                display: flex;
+                padding: 20px;
+                flex-direction: column;
+                justify-content: flex-end;
+            }
             .time-hook {
                 align-items: center;
                 text-align: center;
